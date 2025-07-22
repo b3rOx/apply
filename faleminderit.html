@@ -1,0 +1,34 @@
+<!  <h1 id="title">Faleminderit për aplikimin!</h1>
+  <p id="message">
+    Aplikimi juaj është pranuar me sukses.<br>
+    Ne do t’ju kontaktojmë nëse përmbushni kushtet.
+  </p>
+  <a id="home-link" href="https://www.instagram.com/tewoo.mk" target="_blank" rel="noopener noreferrer">Kthehu në faqen kryesore</a>
+</div>
+
+<script>
+  function changeLanguage() {
+    const lang = document.getElementById("language").value;
+
+    const texts = {
+      sq: {
+        title: "Faleminderit për aplikimin!",
+        message: "Aplikimi juaj është pranuar me sukses.<br>Ne do t’ju kontaktojmë nëse përmbushni kushtet.",
+        home: "Kthehu në faqen kryesore"
+      },
+      mk: {
+        title: "Благодарност за апликацијата!",
+        message: "Вашата апликација е успешно примена.<br>Ќе ве контактираме ако ги исполнувате условите.",
+        home: "Врати се на почетната страница"
+      }
+    };
+
+    document.getElementById("title").innerHTML = texts[lang].title;
+    document.getElementById("message").innerHTML = texts[lang].message;
+    const homeLink = document.getElementById("home-link");
+    homeLink.textContent = texts[lang].home;
+  }
+</script>
+
+</body>
+</html>
