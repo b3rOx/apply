@@ -1,3 +1,126 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aplikim për Punë / Апликација за Работа</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #5a3e2b;
+    }
+    label {
+      margin-top: 15px;
+      display: block;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #5a3e2b;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      width: 100%;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3e2a1d;
+    }
+    .note {
+      font-size: 14px;
+      color: gray;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 id="form-title">Aplikim për Punë</h1>
+
+  <label for="language">Gjuha / Јазик:</label>
+  <select id="language" onchange="changeLanguage()">
+    <option value="sq">Shqip</option>
+    <option value="mk">Македонски</option>
+  </select>
+
+  <form action="https://formsubmit.co/theberox@hotmail.com" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://folshlire.altervista.org/faleminderit.html">
+
+    <label id="label-name" for="name">Emri dhe Mbiemri</label>
+    <input type="text" id="name" name="Emri dhe Mbiemri" required>
+
+    <label id="label-age" for="age">Mosha</label>
+    <input type="number" id="age" name="Mosha" min="18" max="30" required>
+
+    <label id="label-position" for="position">Pozita për të cilën aplikoni</label>
+    <select id="position" name="Pozita" required></select>
+
+    <label id="label-email" for="email">Email</label>
+    <input type="email" id="email" name="Email" required>
+
+    <label id="label-phone" for="phone">Numri i Telefonit</label>
+    <input type="tel" id="phone" name="Numri i Telefonit" required>
+
+    <label id="label-experience" for="experience">Përvoja e mëparshme</label>
+    <textarea id="experience" name="Përvoja" rows="4"></textarea>
+
+    <label id="label-cv" for="cv">Ngarko CV-në</label>
+    <input type="file" id="cv" name="CV" accept=".pdf,.doc,.docx" required>
+
+    <button id="submit-button" type="submit">Dërgo Aplikimin</button>
+  </form>
+
+  <p id="note" class="note">Vetëm kandidatët nga mosha 18 deri 30 do të merren në konsideratë.</p>
+</div>
+
+<script>
+  function changeLanguage() {
+    const lang = document.getElementById("language").value;
+    
+    const sq = {
+      title: "Aplikim për Punë",
+      name: "Emri dhe Mbiemri",
+      age: "Mosha",
+      position: "Pozita për të cilën aplikoni",
+      email: "Email",
+      phone: "Numri i Telefonit",
+      experience: "Përvoja e mëparshme",
+      cv: "Ngarko CV-në",
+      button: "Dërgo Aplikimin",
+      note: "Vetëm kandidatët nga mosha 18 deri 30 do të merren në konsideratë.",
+      positions: [
+        { value: "", text: "-- Zgjidh --" },
+        { value: "Bariste", text: "Bariste" },
+        { value: "Kuzhinjere", text: "Kuzhinjere" },
+        { value: "Shankiste", text: "Shankiste" },
+        { value: "Pastruese", text: "Pastruese" }
+      ]
+    };
+
     const mk = {
       title: "Апликација за Работа",
       name: "Име и Презиме",
@@ -48,4 +171,3 @@
 
 </body>
 </html>
-
