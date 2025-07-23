@@ -2,75 +2,129 @@
 <html lang="sq">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Formulari i Aplikimit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aplikim për punë – TeWoo</title>
   <style>
-    /* Dizajn i thjeshtë, mund ta zëvendësosh me stilin tënd */
     body {
-      font-family: Arial, sans-serif;
-      background: #fef9f1;
-      padding: 40px 10px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fef9f1;
+      margin: 0;
+      padding: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
       color: #5a3e1b;
     }
     form {
-      background: white;
-      max-width: 480px;
-      width: 100%;
-      padding: 30px 35px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      background-color: #fff;
+      padding: 30px 40px;
       border-radius: 10px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
       border: 2px solid #d0b36c;
-      display: flex;
-      flex-direction: column;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
     }
     label {
-      margin-bottom: 8px;
-      font-weight: 600;
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
     }
-    input, textarea {
+    input, select, textarea {
+      width: 100%;
       padding: 10px;
-      margin-bottom: 20px;
-      border: 1.5px solid #d0b36c;
-      border-radius: 6px;
-      font-size: 16px;
-      color: #5a3e1b;
+      border: 1px solid #d0b36c;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    textarea {
+      resize: vertical;
+      height: 100px;
     }
     button {
       background-color: #5a3e1b;
-      color: white;
+      color: #fff;
       border: none;
-      padding: 12px 25px;
+      padding: 12px;
+      width: 100%;
+      margin-top: 25px;
       border-radius: 6px;
-      font-weight: 600;
+      font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.25s ease;
     }
     button:hover {
       background-color: #82653e;
     }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #5a3e1b;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <form action="https://formspree.io/f/mzzveonj" method="POST">
-    <h2>Formulari i Aplikimit</h2>
 
-    <label for="name">Emri</label>
-    <input type="text" id="name" name="name" required />
+<form action="https://formspree.io/f/mzzveonj" method="POST" enctype="multipart/form-data">
+  <h1>Aplikim për punë – TeWoo</h1>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="_replyto" required />
+  <input type="hidden" name="language" value="sq" />
 
-    <label for="message">Mesazhi</label>
-    <textarea id="message" name="message" rows="5" required></textarea>
+  <label for="emri">Emri dhe Mbiemri</label>
+  <input type="text" id="emri" name="emri" required />
 
-    <!-- Ridrejton në faqen falenderuese që ke krijuar -->
-    <input type="hidden" name="_next" value="https://tewoo-mk.github.io/yourrepo/send.php" />
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required />
 
-    <button type="submit">Dërgo</button>
-  </form>
+  <label for="telefoni">Numri i telefonit</label>
+  <input type="tel" id="telefoni" name="telefoni" placeholder="07xxxxxxxx" pattern="[0-9]{9}" required />
+
+  <label for="datelindja">Datëlindja</label>
+  <input type="date" id="datelindja" name="datelindja" required />
+
+  <label for="gjinia">Gjinia</label>
+  <select id="gjinia" name="gjinia" required>
+    <option value="" disabled selected>Zgjidh gjininë</option>
+    <option value="femer">Femër</option>
+    <option value="mashkull">Mashkull</option>
+  </select>
+
+  <label for="pozicioni">Pozita për të cilën aplikoni</label>
+  <select id="pozicioni" name="pozicioni" required>
+    <option value="" disabled selected>Zgjidh pozitën</option>
+    <option value="bariste">Bariste</option>
+    <option value="shankiste">Shankiste</option>
+    <option value="kasa">Kasiere</option>
+    <option value="pastruese">Pastruese</option>
+    <option value="kuzhinjere">Kuzhinjere</option>
+  </select>
+
+  <label for="eksperienca">Eksperienca në shërbim</label>
+  <select id="eksperienca" name="eksperienca" required>
+    <option value="" disabled selected>Zgjidh eksperiencën</option>
+    <option value="pa">Pa eksperiencë</option>
+    <option value="1-2">1-2 vite</option>
+    <option value="3-5">3-5 vite</option>
+    <option value="5plus">Më shumë se 5 vite</option>
+  </select>
+
+  <label for="mesazh">Pse dëshironi të punoni te ne?</label>
+  <textarea id="mesazh" name="mesazh" required></textarea>
+
+  <!-- CV upload nuk funksionon në Formspree falas, prandaj e kam hequr për të mos krijuar gabim -->
+
+  <input type="hidden" name="_next" value="https://yourgithubusername.github.io/yourrepo/success.html" />
+  
+  <button type="submit">Dërgo aplikimin</button>
+  <a href="language.html" class="back-link">Kthehu në zgjedhjen e gjuhës</a>
+</form>
+
 </body>
 </html>
