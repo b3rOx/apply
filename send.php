@@ -1,158 +1,148 @@
 <?php
-// Your existing email sending PHP code here
+$lang = $_POST['language'] ?? 'sq';
 
-// After successful send (or regardless), output this HTML:
+$labels = [
+    'sq' => [
+        'title_success' => 'Aplikimi u dërgua me sukses!',
+        'message_success' => 'Faleminderit! Ne do t\'ju kontaktojmë së shpejti.',
+        'title_error' => 'Ndodhi një gabim',
+        'message_error' => 'Na vjen keq, por aplikimi nuk mund të dërgohej. Ju lutemi provoni përsëri më vonë.',
+        'back' => 'Kthehu te formulari'
+    ],
+    'mk' => [
+        'title_success' => 'Апликацијата е испратена успешно!',
+        'message_success' => 'Ви благодариме! Ќе ве контактираме наскоро.',
+        'title_error' => 'Се појави грешка',
+        'message_error' => 'Извинете, не можеше да се испрати апликацијата. Обидете се повторно подоцна.',
+        'back' => 'Назад кон формуларот'
+    ]
+];
+
+function clean($data) {
+    return nl2br(htmlspecialchars(trim($data)));
+}
+
+// Email info
+$emailTo = "theberox@hotmail.com";
+$language = $_POST['language'] ?? 'sq';
+$formUrl = $language === 'mk' ? 'application-mk.html' : 'application-sq.html';
+
+// Marrja e të dhënave (të dy gjuhët)
+$emri = clean($_POST['emri'] ?? $_POST['ime'] ?? '');
+$email = filter_var(trim($_POST['email'] ?? ''), FILTER_VALIDATE_EMAIL);
+$telefoni = clean($_POST['telefoni'] ?? $_POST['telefon'] ?? '');
+$datelindja = clean($_POST['datelindja'] ?? $_POST['datum'] ?? '');
+$gjinia = clean($_POST['gjinia'] ?? $_POST['pol'] ?? '');
+$pozicioni = clean($_POST['pozicioni'] ?? $_POST['pozicija'] ?? '');
+$eksperienca = clean($_POST['eksperienca'] ?? $_POST['iskustvo'] ?? '');
+$mesazh = clean($_POST['mesazh'] ?? $_POST['poraka'] ?? '');
+$file_ok = isset($_FILES['cvFile']) && $_FILES['cvFile']['error'] === UPLOAD_ERR_OK;
+
+$success = false;
+
+// Validim bazik (CV është opsionale)
+if ($email && $emri && $telefoni && $datelindja && $gjinia && $pozicioni && $eksperienca && $mesazh) {
+    $subject = ($language === 'mk') ? "Нова апликација за работа" : "Aplikim i ri për punë";
+    $boundary = md5(time());
+
+    $body = "--$boundary\r\n";
+    $body .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $body .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
+    $body .= "<h2>$subject</h2>";
+    $body .= "<p><strong>Emri:</strong> $emri</p>";
+    $body .= "<p><strong>Email:</strong> $email</p>";
+    $body .= "<p><strong>Telefoni:</strong> $telefoni</p>";
+    $body .= "<p><strong>Datëlindja:</strong> $datelindja</p>";
+    $body .= "<p><strong>Gjinia:</strong> $gjinia</p>";
+    $body .= "<p><strong>Pozicioni:</strong> $pozicioni</p>";
+    $body .= "<p><strong>Eksperienca:</strong> $eksperienca</p>";
+    $body .= "<p><strong>Mesazhi:</strong><br>$mesazh</p>";
+
+    if ($file_ok) {
+        $fileName = $_FILES['cvFile']['name'];
+        $fileTmp = $_FILES['cvFile']['tmp_name'];
+        $fileType = $_FILES['cvFile']['type'];
+        $fileData = chunk_split(base64_encode(file_get_contents($fileTmp)));
+
+        $body .= "--$boundary\r\n";
+        $body .= "Content-Type: $fileType; name=\"$fileName\"\r\n";
+        $body .= "Content-Disposition: attachment; filename=\"$fileName\"\r\n";
+        $body .= "Content-Transfer-Encoding: base64\r\n\r\n";
+        $body .= $fileData . "\r\n";
+    }
+
+    $body .= "--$boundary--";
+
+    $headers = "From: TeWoo Aplikim <$email>\r\n";
+    $headers .= "Reply-To: $email\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"";
+
+    $success = mail($emailTo, $subject, $body, $headers);
+}
+
+$title = $success ? $labels[$lang]['title_success'] : $labels[$lang]['title_error'];
+$message = $success ? $labels[$lang]['message_success'] : $labels[$lang]['message_error'];
+$backText = $labels[$lang]['back'];
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?=htmlspecialchars($language)?>">
 <head>
   <meta charset="UTF-8" />
-  <title>TeWoo Application Status</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><?=htmlspecialchars($title)?></title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-    /* Reset some defaults */
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f3e6d4, #b68f44);
-      color: #3e2f1c;
+      font-family: Arial, sans-serif;
+      background: #fef9f1;
+      margin: 0; padding: 40px 10px;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 20px;
-      text-align: center;
-      flex-direction: column;
+      color: #5a3e1b;
     }
-
     .container {
-      background: #fff8ef;
-      padding: 40px 50px;
-      border-radius: 16px;
-      box-shadow: 0 12px 30px rgba(182, 143, 68, 0.35);
-      max-width: 440px;
+      background: white;
+      max-width: 480px;
       width: 100%;
-      transition: transform 0.3s ease;
+      padding: 30px 35px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      border: 2px solid #d0b36c;
+      text-align: center;
     }
-
-    .container:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 45px rgba(182, 143, 68, 0.5);
-    }
-
     h1 {
-      font-weight: 700;
-      font-size: 2.6rem;
-      margin-bottom: 12px;
-      color: #5c4724;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
     }
-
     p {
-      font-weight: 500;
-      font-size: 1.15rem;
+      font-size: 17px;
       margin-bottom: 30px;
-      color: #6e5a32;
-      line-height: 1.5;
     }
-
-    .join-text {
-      font-size: 1.1rem;
-      font-style: italic;
-      margin-bottom: 40px;
-      color: #7a6239;
-      font-weight: 600;
-    }
-
-    .join-text span {
-      font-weight: 800;
-      color: #9a7e3f;
-      letter-spacing: 1.1px;
-    }
-
-    .btn-instagram {
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      background-color: #8a623d;
-      color: #fff;
-      padding: 14px 36px;
-      font-weight: 700;
-      font-size: 1.25rem;
-      border-radius: 50px;
-      box-shadow: 0 8px 18px rgba(138, 98, 61, 0.5);
+    a {
+      background-color: #5a3e1b;
+      color: white;
       text-decoration: none;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
-      user-select: none;
-    }
-
-    .btn-instagram:hover {
-      background-color: #b8863e;
-      box-shadow: 0 12px 30px rgba(184, 134, 62, 0.7);
-      transform: scale(1.07);
-    }
-
-    .btn-instagram svg {
-      width: 28px;
-      height: 28px;
-      fill: currentColor;
-      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12));
-      transition: transform 0.3s ease;
-    }
-
-    .btn-instagram:hover svg {
-      transform: rotate(15deg) scale(1.15);
-    }
-
-    .footer {
-      margin-top: 25px;
-      font-size: 0.9rem;
-      color: #5c4724;
+      padding: 12px 25px;
+      border-radius: 6px;
       font-weight: 600;
-      opacity: 0.6;
-      user-select: none;
+      transition: background-color 0.25s ease;
     }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 30px 20px;
-      }
-      h1 {
-        font-size: 2rem;
-      }
-      p {
-        font-size: 1rem;
-      }
-      .join-text {
-        font-size: 1rem;
-        margin-bottom: 30px;
-      }
-      .btn-instagram {
-        padding: 12px 28px;
-        font-size: 1.1rem;
-        gap: 10px;
-      }
-      .btn-instagram svg {
-        width: 24px;
-        height: 24px;
-      }
-      .footer {
-        font-size: 0.8rem;
-        margin-top: 18px;
-      }
+    a:hover {
+      background-color: #82653e;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Thank you for your application!</h1>
-    <p>We appreciate your interest in joining TeWoo Specialty Coffee. We will contact you shortly.</p>
+    <h1><?=htmlspecialchars($title)?></h1>
+    <p><?=htmlspecialchars($message)?></p>
+    <a href="<?=htmlspecialchars($formUrl)?>">&larr; <?=htmlspecialchars($backText)?></a>
+  </div>
+</body>
+</html>
+
 
     <div class="join-text">
       Click to follow us on Instagram, <span>Tewoo.mk</span>
