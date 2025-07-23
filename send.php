@@ -68,7 +68,7 @@
     <textarea id="message" name="message" rows="5" required></textarea>
 
     <!-- Ridrejton në faqen falenderuese që ke krijuar -->
-    <input type="hidden" name="_next" value="https://yourgithubusername.github.io/yourrepo/success.html" />
+    <input type="hidden" name="_next" value="https://tewoo-mk.github.io/yourrepo/send.php" />
 
     <button type="submit">Dërgo</button>
   </form>
