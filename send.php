@@ -142,22 +142,3 @@ $backText = $labels[$lang]['back'];
   </div>
 </body>
 </html>
-
-
-    <div class="join-text">
-      Click to follow us on Instagram, <span>Tewoo.mk</span>
-    </div>
-
-    <a href="https://www.instagram.com/tewoo.mk" target="_blank" rel="noopener noreferrer" class="btn-instagram" aria-label="Instagram">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-5 2.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/>
-      </svg>
-      Instagram
-    </a>
-  </div>
-
-  <div class="footer">
-    Designed by: Berox
-  </div>
-</body>
-</html>
