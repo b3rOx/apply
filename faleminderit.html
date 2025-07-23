@@ -1,4 +1,76 @@
-<!  <h1 id="title">Faleminderit për aplikimin!</h1>
+
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faleminderit për Aplikimin / Благодарност за Апликацијата</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f8f8;
+      margin: 0; padding: 0;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+    .thank-you-container {
+      background-color: white;
+      padding: 40px;
+      text-align: center;
+      max-width: 500px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      position: relative;
+    }
+    h1 {
+      color: #5a3e2b;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 18px;
+      color: #444;
+      margin-bottom: 30px;
+      line-height: 1.4;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      background-color: #5a3e2b;
+      padding: 12px 25px;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    a:hover {
+      background-color: #3e2a1d;
+    }
+    /* Gjuha dropdown */
+    #language {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      background-color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="thank-you-container">
+
+  <select id="language" onchange="changeLanguage()">
+    <option value="sq" selected>Shqip</option>
+    <option value="mk">Македонски</option>
+  </select>
+
+  <h1 id="title">Faleminderit për aplikimin!</h1>
   <p id="message">
     Aplikimi juaj është pranuar me sukses.<br>
     Ne do t’ju kontaktojmë nëse përmbushni kushtet.
